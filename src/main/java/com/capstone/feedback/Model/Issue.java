@@ -1,0 +1,115 @@
+package com.capstone.feedback.Model;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name ="issues")
+public class Issue {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="Issue_Id")
+    private int issue_id;
+
+    @ManyToOne
+    @JoinColumn(name ="User_Id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name ="Facility_Id")
+    private Facility facility;
+
+    @Column(name ="Title")
+    private String title;
+
+    @Column(name ="Description")
+    private String description;
+
+    @Column(name="Priority")
+    private String priority;
+
+    @Column(name ="Status")
+    private String status;
+
+    @Column(name ="Created_At")
+    private LocalDateTime Created_At;
+
+    public int getIssue_id() {
+        return issue_id;
+    }
+
+    public void setIssue_id(int issue_id) {
+        this.issue_id = issue_id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Facility getFacility() {
+        return facility;
+    }
+
+    public void setFacility(Facility facility) {
+        this.facility = facility;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreated_At() {
+        return Created_At;
+    }
+
+    public void setCreated_At(LocalDateTime created_At) {
+        Created_At = created_At;
+    }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "issue_id=" + issue_id +
+                ", user=" + user +
+                ", facility=" + facility +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", priority='" + priority + '\'' +
+                ", status='" + status + '\'' +
+                ", Created_At=" + Created_At +
+                '}';
+    }
+}
