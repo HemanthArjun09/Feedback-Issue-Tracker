@@ -33,7 +33,12 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 // Use the default, auto-generated login page from Spring Security
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
+                .formLogin(form -> form
+                        // Add this line to set the default redirect page after login
+                        .defaultSuccessUrl("/dashboard", true)
+                        .
+                        .permitAll()
+                );
 
         return http.build();
     }
