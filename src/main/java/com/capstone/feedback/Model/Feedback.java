@@ -32,9 +32,6 @@ public class Feedback {
     @Column(name = "Created_At")
     private LocalDateTime created_at;
 
-    @Column(name = "Title")
-    private String Title;
-
     public int getFeedback_id() {
         return feedback_id;
     }
@@ -101,7 +98,6 @@ public class Feedback {
                 ", description='" + description + '\'' +
                 ", rating='" + rating + '\'' +
                 ", created_at=" + created_at +
-                ", Title='" + Title + '\'' +
                 '}';
     }
 }
