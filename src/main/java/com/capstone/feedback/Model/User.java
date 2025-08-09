@@ -1,78 +1,108 @@
 package com.capstone.feedback.Model;
 
-import com.capstone.feedback.Model.enums.User_Types;
-import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name ="users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "mobileNumber")
+})
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="User_Id")
-    private int User_Id;
+    private Long userId;
 
-    @Column(name ="Email")
-    private String Email;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @Column(name ="FirstName", nullable = false)
-    private String FirstName;
+    @Column(nullable = false)
+    private String password; // <-- Added this for Spring Security
 
-    @Column(name ="LastName", nullable = false)
-    private String LastName;
+    @Column(nullable = false)
+    private String firstName;
 
-    @Column(name ="MobileNumer", nullable = false)
-    private String MobileNum;
+    @Column(nullable = false)
+    private String lastName;
 
-    @Column(name ="Role", nullable = false)
-    private User_Types Role;
+    private String mobileNumber;
 
-    public int getUser_Id() {
-        return User_Id;
+    @Column(nullable = false)
+    private String role; // <-- Changed to String for clarity (e.g., "ROLE_ADMIN")
+
+    // --- Constructors, Getters, and Setters ---
+
+    public User() {
     }
 
-    public void setUser_Id(int user_Id) {
-        User_Id = user_Id;
+    public User(String email, String password, String firstName, String lastName, String mobileNumber, String role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mobileNumber = mobileNumber;
+        this.role = role;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
-    public String getMobileNum() {
-        return MobileNum;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setMobileNum(String mobileNum) {
-        MobileNum = mobileNum;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
-    public User_Types getRole() {
-        return Role;
+    public String getRole() {
+        return role;
     }
 
-    public void setRole(User_Types role) {
-        Role = role;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
