@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Facility</title>
+    <style>
+        /* --- Fonts & Body --- */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F5F5DC; /* --- Light Beige Background --- */
+            color: #5D4037; /* --- Dark Brown Text --- */
+            margin: 0;
+            padding: 2.5rem;
+            line-height: 1.6;
+        }
+
+        /* --- Main Content Container --- */
+        .container {
+            max-width: 600px; /* --- Made the form container a bit smaller --- */
+            margin: auto;
+            background: #FAF0E6; /* --- Linen/Off-white Container --- */
+            padding: 2rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #EFEBE9;
+        }
+
+        /* --- Headings --- */
+        h2 {
+            font-family: 'Georgia', serif;
+            color: #795548; /* --- Rich Brown for Headings --- */
+            font-weight: 400;
+            text-align: center;
+            border-bottom: 2px solid #D7CCC8;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* --- Form Styling --- */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #8D6E63;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D7CCC8;
+            border-radius: 8px;
+            background-color: #FBFBFB;
+            box-sizing: border-box; /* --- Ensures padding doesn't affect width --- */
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #A1887F;
+        }
+
+        /* --- Button Styling --- */
+        button {
+            width: 100%;
+            background-color: #A1887F; /* --- Muted Brown Button --- */
+            color: #ffffff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #8D6E63; /* --- Darker Brown on Hover --- */
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+<h2>Add a New Facility</h2>
+<form th:action="@{/add-facility}" th:object="${facility}" method="post">
+    <div>
+        <label>Facility Name:</label>
+        <input type="text" th:field="*{facility_Name}" required/>
+    </div>
+    <div>
+        <label>Location:</label>
+        <input type="text" th:field="*{facility_Location}" required/>
+    </div>
+    <div>
+        <label>Facility Type (e.g., 1 for Gym, 2 for Lab):</label>
+        <select id="facility_type" th:field="*{facility_Type}" required>
+            <option th:each="type : ${facilityTypes}"
+                    th:value="${type}"
+                    th:text="${type}"></option>
+        </select>
+    </div>
+    <button type="submit">Save Facility</button>
+</form>
+</body>
+</html>

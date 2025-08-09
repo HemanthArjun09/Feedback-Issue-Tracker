@@ -4,12 +4,108 @@
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-    h1 { color: #2c3e50; }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #F5F5DC; /* --- Light Beige Background --- */
+      color: #5D4037; /* --- Dark Brown Text --- */
+      margin: 0;
+      padding: 2.5rem;
+      line-height: 1.6;
+    }
+
+    /* --- Main Content Container --- */
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #FAF0E6; /* --- Linen/Off-white Container --- */
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      border: 1px solid #EFEBE9;
+    }
+
+    /* --- Headings --- */
+    h1, h2 {
+      font-family: 'Georgia', serif;
+      color: #795548; /* --- Rich Brown for Headings --- */
+      font-weight: 400;
+    }
+
+    h1 {
+      border-bottom: 2px solid #D7CCC8;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* --- Link Styled as a Button --- */
+    .add-link {
+      display: inline-block;
+      background-color: #A1887F; /* --- Muted Brown Button --- */
+      color: #ffffff;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.2s;
+      margin-bottom: 1.5rem;
+    }
+    .add-link:hover {
+      background-color: #8D6E63; /* --- Darker Brown on Hover --- */
+      transform: translateY(-2px);
+    }
+
+    /* --- Table Styling --- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #D7CCC8; /* --- Light Brown Border --- */
+    }
+
+    thead th {
+      background-color: #EFEBE9; /* --- Very Light Brown/Gray Header --- */
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 600;
+      color: #6D4C41;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #FBFBFB;
+    }
+
+    tbody tr:hover {
+      background-color: #EFEBE9;
+    }
   </style>
 </head>
 <body>
 <h1>Welcome, <span th:test="${userName}">User</span>!</h1>
 <p>You have successfully logged into the Feedback & Issue Tracker.</p>
+<hr>
+<a href="/add-facility">Add New Facility</a>
+<h2>Available Facilities</h2>
+<table border="1" style="margin: auto; border-collapse: collapse; width: 80%;">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Type</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="facility : ${facilities}">
+    <td th:text="${facility.facility_id}"></td>
+    <td th:text="${facility.getFacility_Name()}"></td>
+    <td th:text="${facility.getFacility_Location()}"></td>
+    <td th:text="${facility.getFacility_Type()}"></td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>

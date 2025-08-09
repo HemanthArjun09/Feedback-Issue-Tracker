@@ -36,7 +36,6 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         // Add this line to set the default redirect page after login
                         .defaultSuccessUrl("/dashboard", true)
-                        .
                         .permitAll()
                 );
 

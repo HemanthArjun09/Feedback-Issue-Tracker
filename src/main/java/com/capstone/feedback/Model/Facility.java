@@ -44,6 +44,8 @@ public class Facility {
         return Facility_Type;
     }
 
+    public Facility() {
+    }
     public void setFacility_Type(Facility_Types facility_Type) {
         Facility_Type = facility_Type;
     }
