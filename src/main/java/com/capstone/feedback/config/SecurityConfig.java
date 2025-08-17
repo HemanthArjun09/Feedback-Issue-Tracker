@@ -30,7 +30,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for simplicity
                 .authorizeHttpRequests(authz -> authz
                         // Any request that comes in must be authenticated
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/login", "/signup", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/add-facility").hasAnyAuthority("ROLE_ADMIN", "FACILITY_USER")
                         .anyRequest().authenticated()
                 )
                 // Use the default, auto-generated login page from Spring Security

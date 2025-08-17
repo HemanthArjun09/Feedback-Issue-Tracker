@@ -4,6 +4,7 @@ package com.capstone.feedback.Controller;
 
 import com.capstone.feedback.Model.User;
 // import com.capstone.feedback.service.UserService; // You'll create this service
+import com.capstone.feedback.Model.enums.User_Types;
 import com.capstone.feedback.Repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -26,8 +31,16 @@ public class UserController {
 
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
-        // Create a new User object to hold the form data
+        // Add the empty User object for the form
         model.addAttribute("user", new User());
+
+        // ✅ Add the list of roles to the model
+        // We get all values from the User_Types enum and filter out ADMIN
+        List<User_Types> userRoles = Arrays.stream(User_Types.values())
+                .filter(role -> role != User_Types.ADMIN)
+                .collect(Collectors.toList());
+        model.addAttribute("roles", userRoles);
+
         return "signup"; // Returns the signup.html template
     }
 
@@ -45,8 +58,8 @@ public class UserController {
 
         // Here, you would call your service to save the user.
         // The service would also check if the email is already taken.
+//        user.setRole("USER");
          userRepository.save(user);
-
         System.out.println("New user registered: " + user.getEmail());
 
 

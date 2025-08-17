@@ -10,10 +10,5 @@ public class LoginController {
     public String login() {
         return "login";
     }
-
-    @PostMapping("/login")
-    public String loginPost() {
-
-        return "dashboard";
-    }
+    
 }

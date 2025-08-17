@@ -30,34 +30,6 @@
       font-weight: 400;
     }
 
-    /* --- ADD THE NEW NAVBAR CSS HERE --- */
-    .navbar {
-      background-color: #795548;
-      overflow: hidden;
-      border-radius: 1px;
-      margin-bottom: 1rem;
-    }
-    .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-    .navbar li {
-      float: left;
-    }
-    .navbar li a {
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 10px 20px;
-      text-decoration: none;
-      font-weight: normal;
-      transition: background-color 0.3s;
-    }
-    .navbar li a:hover {
-      background-color: #5D4037;
-    }
-    /* --- End of Navbar CSS --- */
 
 
     /* --- Table Styling from before --- */
@@ -77,24 +49,21 @@
       color: #6D4C41;
     }
     tbody tr:hover {
-      background-color: #EFEBE9;
+      background-color: #d3c8bf;
+
     }
     h4{
       font-family: 'Helvetica Neue', Arial, sans-serif;
       color: white;
       padding: 0px 10px;
+      /* In dashboard.html, inside the <style> tag */
     }
 
   </style>
 </head>
 <body>
 
-<nav class="navbar">
-  <h4 class ="Title">F-I-T</h4>
-  <ul>
-    <li><a href="/add-facility">Add Accommodation</a></li>
-  </ul>
-</nav>
+<div th:replace="~{fragments :: navbar}"></div>
 
 
 <div class="container">

@@ -34,6 +34,8 @@ public class DashboardContoller {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("userName", user.getFirstName());
+        model.addAttribute("userRole", user.getRole());
+        System.out.println(user.getRole());
         model.addAttribute("facilities", facilities);
         return "dashboard";
     }

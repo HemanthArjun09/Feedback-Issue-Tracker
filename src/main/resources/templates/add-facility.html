@@ -85,6 +85,9 @@
     </style>
 </head>
 <body>
+
+<div th:replace="~{fragments :: navbar}"></div>
+
 <h2>Add a New Facility</h2>
 <form th:action="@{/add-facility}" th:object="${facility}" method="post">
     <div>

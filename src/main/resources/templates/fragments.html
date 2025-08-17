@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav th:fragment="navbar" class="navbar">
+    <style>
+        .title{
+            font-family: 'Helvetica Neue', Arial, sans-serif; color: white; padding: 0 10px; float: left; line-height: 48px; margin: 0 10px 0 0;
+
+        }
+
+        /* Navbar container */
+        .navbar { background-color: #795548; overflow: hidden; border-radius: 1px; margin-bottom: 1rem; }
+        .navbar ul { list-style-type: none; margin: 0; padding: 0; }
+        .navbar::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .navbar li { float: left; }
+        .navbar li a, .navbar .dropdown { display: block; color: white; text-align: center; padding: 14px 20px; text-decoration: none; font-weight: normal; transition: background-color 0.3s; }
+        .navbar li a:hover, .navbar .dropdown:hover { background-color: #5D4037; overflow: visible }
+        .navbar .Title { font-family: 'Helvetica Neue', Arial, sans-serif; color: white; padding: 0 10px; float: left; line-height: 48px; margin: 0 10px 0 0; }
+
+        /* Dropdown styles */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);  border-radius: 5px; z-index: 1;  }
+        .dropdown-content a, .dropdown-content .logout-btn { color: #5D4037; padding: 12px 16px; text-decoration: none; display: block; text-align: left; }
+        .dropdown-content .logout-btn { width: 100%; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 1rem; }
+        .dropdown-content a:hover, .dropdown-content .logout-btn:hover { background-color: #d3c8bf; }
+        .dropdown:hover .dropdown-content { display: block; }
+    </style>
+
+    <h4 class="Title"><a class="title" href="/dashboard"> F-I-T</a></h4>
+    <ul>
+        <th:block th:if="${userRole == 'ROLE_ADMIN' or userRole =='FACILITY_USER'}">
+            <li>
+                <a href="/add-facility">Add Accommodation</a>
+            </li>
+        </th:block>
+
+        <th:block th:if="${userRole == 'USER'}">
+            <li>
+                <a href="#" onclick="alert('You must be an Admin or Facility Administrator to add an accommodation.'); return false;">
+                    Add Accommodation
+                </a>
+            </li>
+        </th:block>
+        <th:block>
+        <li class="dropdown" style="float:right;"> <a href="javascript:void(0)" class="dropdown">Account</a>
+            <div class="dropdown-content">
+                <a href="/account-details">Account Details</a>
+                <form th:action="@{/logout}" method="post" style="margin: 0;">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </li></th:block>
+    </ul>
+</nav>
+
+</body>
+</html>
