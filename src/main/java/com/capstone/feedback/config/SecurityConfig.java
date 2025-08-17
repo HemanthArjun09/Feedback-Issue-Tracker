@@ -30,14 +30,27 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for simplicity
                 .authorizeHttpRequests(authz -> authz
                         // Any request that comes in must be authenticated
+                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 // Use the default, auto-generated login page from Spring Security
                 .formLogin(form -> form
-                        // Add this line to set the default redirect page after login
+                        .loginPage("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/dashboard", true)
                         .permitAll()
+
+                )
+                .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer.rememberMeParameter("remember-me")
+                        .key("remember-me")
+                        .tokenValiditySeconds(7*24*60*60)
+                )
+                .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutUrl("/logout")
+                        .deleteCookies("JSESSIONID", "remember-me")
+                        .permitAll()
                 );
+
 
         return http.build();
     }

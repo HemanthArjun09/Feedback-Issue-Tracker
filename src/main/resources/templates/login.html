@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Feedback & Issue Tracker</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F5F5DC;
+            color: #5D4037;
+            margin: 0;
+            padding: 2.5rem;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 410px;
+            width: 100%;
+            background: #FAF0E6;
+            padding: 2rem 2.5rem 2.5rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #EFEBE9;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Georgia', serif;
+            color: #795548;
+            font-weight: 400;
+            border-bottom: 2px solid #D7CCC8;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
+            margin-top: 0;
+            font-size: 2rem;
+        }
+
+        label {
+            display: block;
+            color: #6D4C41;
+            font-weight: 500;
+            margin-bottom: .5rem;
+            margin-top: 1.2rem;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="password"], input[type ="email"] {
+            width: 100%;
+            padding: .7rem;
+            margin-bottom: 1rem;
+            border: 1px solid #D7CCC8;
+            border-radius: 8px;
+            background: #FBFBFB;
+            font-size: 1rem;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .login-btn, .signup-btn {
+            display: inline-block;
+            background-color: #A1887F;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .login-btn:hover, .signup-btn:hover {
+            background-color: #8D6E63;
+            transform: translateY(-2px);
+        }
+
+        .signup-section {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+        }
+        .signup-btn {
+            margin-left: 0.4rem;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email id" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+    <div class="signup-section">
+        Don't have an account?
+        <a href="/signup" class="signup-btn">Sign up</a>
+    </div>
+</div>
+</body>
+</html>

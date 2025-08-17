@@ -34,9 +34,7 @@ public class User {
     private String mobileNumber;
 
     @Column(nullable = false)
-    private String role; // <-- Changed to String for clarity (e.g., "ROLE_ADMIN")
-
-    // --- Constructors, Getters, and Setters ---
+    private String role;
 
     public User() {
     }

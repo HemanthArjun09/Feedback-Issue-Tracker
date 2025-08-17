@@ -96,11 +96,15 @@
         <input type="text" th:field="*{facility_Location}" required/>
     </div>
     <div>
-        <label>Facility Type (e.g., 1 for Gym, 2 for Lab):</label>
         <select id="facility_type" th:field="*{facility_Type}" required>
+
+            <option value="" disabled selected>Select a type</option>
+
             <option th:each="type : ${facilityTypes}"
                     th:value="${type}"
-                    th:text="${type}"></option>
+                    th:text="${type}">
+            </option>
+
         </select>
     </div>
     <button type="submit">Save Facility</button>

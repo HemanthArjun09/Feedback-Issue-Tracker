@@ -21,6 +21,7 @@ public class FacilityController {
     public String showAddFacilityForm(Model model) {
         // Create a new, empty facility object to bind to the form
         model.addAttribute("facility", new Facility());
+        model.addAttribute("facilityTypes", Facility_Types.values());
         return "add-facility";
     }
 
@@ -28,6 +29,6 @@ public class FacilityController {
     public String addFacility(@ModelAttribute Facility facility) {
         // Save the new facility object (which is filled by the form) to the database
         facilityRepository.save(facility);
-        return "redirect:/dashboard"; // Redirect back to the dashboard to see the new entry
+        return "redirect:/dashboard";
     }
 }
