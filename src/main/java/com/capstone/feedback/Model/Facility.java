@@ -15,6 +15,17 @@ public class Facility {
     private String Facility_Location;
     @Column(name ="Facility_Type", nullable = false)
     private Facility_Types Facility_Type;
+    @ManyToOne
+    @JoinColumn(name = "facility_admin_user_id")
+    private User facilityAdmin;
+
+    public User getFacilityAdmin() {
+        return facilityAdmin;
+    }
+
+    public void setFacilityAdmin(User facilityAdmin) {
+        this.facilityAdmin = facilityAdmin;
+    }
 
     public int getFacility_id() {
         return Facility_id;

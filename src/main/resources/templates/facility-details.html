@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${facility.getFacility_Name()} + ' | Details'"></title>
+  <style>
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #F5F5DC; color: #5D4037; margin: 0; line-height: 1.6; }
+    .tab-container { width: 80%; margin: 2rem auto; }
+    .tab-links { overflow: hidden; border: 1px solid #ccc; background-color: #f1f1f1; border-radius: 8px 8px 0 0; }
+    .tab-links button { background-color: inherit; float: left; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 17px; }
+    .tab-links button:hover { background-color: #ddd; }
+    .tab-links button.active { background-color: #ccc; }
+    .tab-content { display: none; padding: 20px; border: 1px solid #ccc; border-top: none; background: #FAF0E6; border-radius: 0 0 8px 8px; }
+
+    /* Star Rating CSS */
+    .rating { display: inline-block; border: none; }
+    .rating > input { display: none; } /* Hide the radio buttons */
+    .rating > label {
+      color: #ccc;
+      float: right; /* Render stars in reverse */
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+    /* The magic: style stars on hover */
+    .rating > label:hover,
+    .rating > label:hover ~ label {
+      color: #f7d106;
+    }
+    /* Style the selected stars */
+    .rating > input:checked ~ label {
+      color: #f7d106;
+    }
+    /* Form styling */
+    .feedback-list-container {
+      margin-top: 2rem;
+    }
+
+    .feedback-card {
+      background-color: #EFEBE9;
+      border: 1px solid #D7CCC8;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feedback-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .feedback-header .user-name {
+      font-weight: bold;
+      color: #5D4037;
+    }
+
+    .feedback-header .star-rating {
+      font-size: 1.2rem;
+    }
+
+    .feedback-title {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-family: 'Georgia', serif;
+      color: #6D4C41;
+    }
+
+    .feedback-description {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* In facility-details.html, inside the <style> tag */
+
+    /* Star Rating CSS */
+    .rating { display: inline-block; border: none; }
+    .rating > input { display: none; } /* Hide the radio buttons */
+    .rating > label {
+      color: #ccc;
+      float: right; /* Render stars in reverse */
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+
+    /* The hover effect stays a consistent gold color */
+    .rating > label:hover,
+    .rating > label:hover ~ label {
+      color: #f7d106;
+    }
+
+    /* --- NEW COLOR RULES FOR CHECKED STARS --- */
+
+    /* 1 star is checked = RED */
+    .rating > input#star1:checked ~ label {
+      color: #E74C3C; /* Red */
+    }
+
+    /* 2 or 3 stars are checked = ORANGE */
+    .rating > input#star2:checked ~ label,
+    .rating > input#star3:checked ~ label {
+      color: #F39C12; /* Orange */
+    }
+
+    /* 4 or 5 stars are checked = GREEN */
+    .rating > input#star4:checked ~ label,
+    .rating > input#star5:checked ~ label {
+      color: #2ECC71; /* Green */
+    }
+
+  </style>
+</head>
+<body>
+
+<div th:replace="~{fragments :: navbar}"></div>
+
+<div class="tab-container">
+  <h1 th:text="${facility.getFacility_Name()}">Facility Name</h1>
+  <p th:text="${facility.getFacility_Location()}">Facility Location</p>
+
+  <div class="tab-links">
+    <button class="tab-link" onclick="openTab(event, 'Issues')" id="defaultOpen">Issue Tracker</button>
+    <button class="tab-link" onclick="openTab(event, 'Feedback')">Feedback</button>
+  </div>
+
+  <div id="Issues" class="tab-content">
+    <h2>Issues</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Priority</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="issue : ${issues}">
+        <td th:text="${issue.title}"></td>
+        <td th:text="${issue.description}"></td>
+        <td th:text="${issue.status}"></td>
+        <td th:text="${issue.priority}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="Feedback" class="tab-content">
+    <h2>Feedback</h2>
+    <div class="feedback-form">
+      <h3>Post Your Feedback</h3>
+      <form th:action="@{/facility/{id}/feedback(id=${facility.getFacility_id()})}" th:object="${newFeedback}" method="post">
+
+        <fieldset class="rating">
+          <input type="radio" id="star5" th:field="*{5}" value="5" /><label for="star5" title="5 stars">★</label>
+          <input type="radio" id="star4" th:field="*{4}" value="4" /><label for="star4" title="4 stars">★</label>
+          <input type="radio" id="star3" th:field="*{3}" value="3" /><label for="star3" title="3 stars">★</label>
+          <input type="radio" id="star2" th:field="*{2}" value="2" /><label for="star2" title="2 stars">★</label>
+          <input type="radio" id="star1" th:field="*{1}" value="1" required /><label for="star1" title="1 star">★</label>
+        </fieldset>
+
+        <div>
+          <input type="text" th:field="${feedback.getTitle()}" placeholder="Feedback Title" required />
+        </div>
+        <div>
+          <textarea th:field="${feedback.getDescription()}" rows="4" placeholder="Describe your experience..." required></textarea>
+        </div>
+
+        <button type="submit">Post Feedback</button>
+      </form>
+    </div>
+    <div class="feedback-list-container">
+      <div th:each="feedback : ${feedbackList}" class="feedback-card">
+
+        <div class="feedback-header">
+          <span class="user-name" th:text="${feedback.user.firstName} + ' ' + ${feedback.user.lastName}">User Name</span>
+          <span class="star-rating">
+                <span th:each="i : ${#numbers.sequence(1, feedback.rating)}" style="color: #f7d106;">★</span>
+                <span th:each="i : ${#numbers.sequence(feedback.rating + 1, 5)}" style="color: #ccc;">★</span>
+            </span>
+        </div>
+
+        <h4 class="feedback-title" th:text="${feedback.title}">Feedback Title</h4>
+
+        <p class="feedback-description" th:text="${feedback.description}">
+          This is where the full text of the user's review will be displayed.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openTab(evt, tabName) {
+    // Hide all tab content
+    let tabcontent = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Deactivate all tab links
+    let tablinks = document.getElementsByClassName("tab-link");
+    for (let i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the selected tab content and activate the link
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  // Get the element with id="defaultOpen" and click on it to open the default tab
+  document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>

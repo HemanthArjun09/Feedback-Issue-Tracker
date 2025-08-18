@@ -83,8 +83,12 @@
     </thead>
     <tbody>
     <tr th:each="facility : ${facilities}">
-      <td th:text="${facility.facility_id}"></td>
-      <td th:text="${facility.facility_Name}"></td> <td th:text="${facility.facility_Location}"></td> <td th:text="${facility.facility_Type}"></td>
+      <td th:text="${facility.getFacility_id()}"></td>
+      <td>
+        <a th:href="@{/facility/{id}(id=${facility.getFacility_id()})}" th:text="${facility.getFacility_Name()}"></a>
+      </td>
+      <td th:text="${facility.getFacility_Location()}"></td>
+      <td th:text="${facility.getFacility_Type()}"></td>
     </tr>
     </tbody>
   </table>

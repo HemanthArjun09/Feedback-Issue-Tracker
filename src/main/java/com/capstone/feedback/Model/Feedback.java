@@ -27,7 +27,7 @@ public class Feedback {
     private String description;
 
     @Column(name = "Rating")
-    private String rating;
+    private int rating;
 
     @Column(name = "Created_At")
     private LocalDateTime created_at;
@@ -72,11 +72,11 @@ public class Feedback {
         this.description = description;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
