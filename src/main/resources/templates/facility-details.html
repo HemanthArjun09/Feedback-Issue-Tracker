@@ -11,112 +11,84 @@
     .tab-links button:hover { background-color: #ddd; }
     .tab-links button.active { background-color: #ccc; }
     .tab-content { display: none; padding: 20px; border: 1px solid #ccc; border-top: none; background: #FAF0E6; border-radius: 0 0 8px 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #D7CCC8; }
+    thead th { background-color: #EFEBE9; font-weight: 600; color: #6D4C41; }
+    tbody tr:hover { background-color: #d3c8bf; }
 
-    /* Star Rating CSS */
-    .rating { display: inline-block; border: none; }
-    .rating > input { display: none; } /* Hide the radio buttons */
-    .rating > label {
-      color: #ccc;
-      float: right; /* Render stars in reverse */
-      font-size: 2.5rem;
-      cursor: pointer;
-    }
-    /* The magic: style stars on hover */
-    .rating > label:hover,
-    .rating > label:hover ~ label {
-      color: #f7d106;
-    }
-    /* Style the selected stars */
-    .rating > input:checked ~ label {
-      color: #f7d106;
-    }
-    /* Form styling */
-    .feedback-list-container {
-      margin-top: 2rem;
-    }
+    /* --- Feedback Form Styling --- */
+    .feedback-form { margin-top: 2rem; padding: 1.5rem; background-color: #EFEBE9; border-radius: 8px; }
 
-    .feedback-card {
-      background-color: #EFEBE9;
-      border: 1px solid #D7CCC8;
+    /* ✅ ADDED STYLES FOR TITLE AND DESCRIPTION FIELDS */
+    .feedback-form input[type="text"],
+    .feedback-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
       border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1rem;
     }
 
-    .feedback-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
+    .feedback-form button { background-color: #A1887F; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .feedback-form button:hover { background-color: #8D6E63; }
 
-    .feedback-header .user-name {
-      font-weight: bold;
-      color: #5D4037;
-    }
-
-    .feedback-header .star-rating {
-      font-size: 1.2rem;
-    }
-
-    .feedback-title {
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-      font-family: 'Georgia', serif;
-      color: #6D4C41;
-    }
-
-    .feedback-description {
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    /* In facility-details.html, inside the <style> tag */
-
-    /* Star Rating CSS */
+    /* --- Star Rating CSS (Cleaned Up) --- */
     .rating { display: inline-block; border: none; }
-    .rating > input { display: none; } /* Hide the radio buttons */
+    .rating > input { display: none; }
     .rating > label {
       color: #ccc;
-      float: right; /* Render stars in reverse */
+      float: right;
       font-size: 2.5rem;
       cursor: pointer;
     }
-
-    /* The hover effect stays a consistent gold color */
     .rating > label:hover,
     .rating > label:hover ~ label {
       color: #f7d106;
     }
-
-    /* --- NEW COLOR RULES FOR CHECKED STARS --- */
-
-    /* 1 star is checked = RED */
-    .rating > input#star1:checked ~ label {
-      color: #E74C3C; /* Red */
-    }
-
-    /* 2 or 3 stars are checked = ORANGE */
+    .rating > input#star1:checked ~ label { color: #E74C3C; } /* Red */
     .rating > input#star2:checked ~ label,
-    .rating > input#star3:checked ~ label {
-      color: #F39C12; /* Orange */
-    }
-
-    /* 4 or 5 stars are checked = GREEN */
+    .rating > input#star3:checked ~ label { color: #F39C12; } /* Orange */
     .rating > input#star4:checked ~ label,
-    .rating > input#star5:checked ~ label {
-      color: #2ECC71; /* Green */
+    .rating > input#star5:checked ~ label { color: #2ECC71; } /* Green */
+
+    /* --- Feedback Card Styling --- */
+    .feedback-list-container { margin-top: 2rem; }
+    .feedback-card { background-color: #EFEBE9; border: 1px solid #D7CCC8; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
+    .feedback-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .feedback-header .user-name { font-weight: bold; color: #5D4037; }
+    .feedback-header .star-rating { font-size: 1.2rem; }
+    .feedback-title { margin-top: 0.5rem; margin-bottom: 0.5rem; font-family: 'Georgia', serif; color: #6D4C41; }
+    .feedback-description { margin: 0; line-height: 1.5; }
+    /* In the <style> tag in facility-details.html */
+
+    .alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      transition: opacity 0.5s ease-out; /* ✅ Add this line for the transition */
     }
 
+    /* ✅ Add this new class to make the alert invisible */
+    .alert.fade-out {
+      opacity: 0;
+    }
+
+    .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+    .alert-danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
   </style>
 </head>
 <body>
-
 <div th:replace="~{fragments :: navbar}"></div>
 
 <div class="tab-container">
   <h1 th:text="${facility.getFacility_Name()}">Facility Name</h1>
   <p th:text="${facility.getFacility_Location()}">Facility Location</p>
+  <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+  <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
   <div class="tab-links">
     <button class="tab-link" onclick="openTab(event, 'Issues')" id="defaultOpen">Issue Tracker</button>
@@ -136,10 +108,10 @@
       </thead>
       <tbody>
       <tr th:each="issue : ${issues}">
-        <td th:text="${issue.title}"></td>
-        <td th:text="${issue.description}"></td>
-        <td th:text="${issue.status}"></td>
-        <td th:text="${issue.priority}"></td>
+        <td th:text="${issue.getTitle()}"></td>
+        <td th:text="${issue.getDescription()}"></td>
+        <td th:text="${issue.getStatus()}"></td>
+        <td th:text="${issue.getPriority()}"></td>
       </tr>
       </tbody>
     </table>
@@ -152,18 +124,18 @@
       <form th:action="@{/facility/{id}/feedback(id=${facility.getFacility_id()})}" th:object="${newFeedback}" method="post">
 
         <fieldset class="rating">
-          <input type="radio" id="star5" th:field="*{5}" value="5" /><label for="star5" title="5 stars">★</label>
-          <input type="radio" id="star4" th:field="*{4}" value="4" /><label for="star4" title="4 stars">★</label>
-          <input type="radio" id="star3" th:field="*{3}" value="3" /><label for="star3" title="3 stars">★</label>
-          <input type="radio" id="star2" th:field="*{2}" value="2" /><label for="star2" title="2 stars">★</label>
-          <input type="radio" id="star1" th:field="*{1}" value="1" required /><label for="star1" title="1 star">★</label>
+          <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
+          <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
+          <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★</label>
+          <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★</label>
+          <input type="radio" id="star1" name="rating" value="1" required /><label for="star1" title="1 star">★</label>
         </fieldset>
 
         <div>
-          <input type="text" th:field="${feedback.getTitle()}" placeholder="Feedback Title" required />
+          <input type="text" name="Title" placeholder="Feedback Title" required />
         </div>
         <div>
-          <textarea th:field="${feedback.getDescription()}" rows="4" placeholder="Describe your experience..." required></textarea>
+          <textarea name="Description" rows="4" placeholder="Describe your experience..." required></textarea>
         </div>
 
         <button type="submit">Post Feedback</button>
@@ -175,9 +147,8 @@
         <div class="feedback-header">
           <span class="user-name" th:text="${feedback.user.firstName} + ' ' + ${feedback.user.lastName}">User Name</span>
           <span class="star-rating">
-                <span th:each="i : ${#numbers.sequence(1, feedback.rating)}" style="color: #f7d106;">★</span>
-                <span th:each="i : ${#numbers.sequence(feedback.rating + 1, 5)}" style="color: #ccc;">★</span>
-            </span>
+    <span th:each="i : ${#numbers.sequence(1, feedback.rating)}" style="color: #f7d106;">★</span>
+    </span>
         </div>
 
         <h4 class="feedback-title" th:text="${feedback.title}">Feedback Title</h4>
@@ -211,6 +182,27 @@
 
   // Get the element with id="defaultOpen" and click on it to open the default tab
   document.getElementById("defaultOpen").click();
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Find all elements with the class 'alert'
+    const alerts = document.querySelectorAll('.alert');
+
+    alerts.forEach(function(alert) {
+      // Set a timer for 10 seconds (10000 milliseconds)
+      setTimeout(function() {
+        // Add the 'fade-out' class to trigger the CSS transition
+        alert.classList.add('fade-out');
+
+        // After the fade-out animation completes (500ms),
+        // set display to 'none' to remove it from the page layout
+        setTimeout(function() {
+          alert.style.display = 'none';
+        }, 500);
+
+      }, 10000); // 10-second delay
+    });
+  });
 </script>
 
 </body>

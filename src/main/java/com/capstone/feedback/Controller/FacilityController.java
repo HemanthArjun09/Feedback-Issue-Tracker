@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -71,10 +73,44 @@ public class FacilityController {
         model.addAttribute("facility", facility);
         model.addAttribute("issues", issues);
         model.addAttribute("feedbackList", feedbackList);
-        model.addAttribute("feedback", feedback);
+        model.addAttribute("newFeedback", feedback);
 
         // 5. Return the new template
         return "facility-details";
+    }
+
+    @PostMapping("/facility/{id}/feedback")
+    public String addFeedback(@PathVariable("id") int facilityId,
+                              @ModelAttribute("newFeedback") Feedback feedback,
+                              @AuthenticationPrincipal UserDetails userDetails,
+                              Model model, RedirectAttributes redirectAttributes) {
+
+        Facility facility = facilityRepository.findById(facilityId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid facility Id:" + facilityId));
+        User currentUser = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Set all the necessary context on the feedback object
+        if (currentUser.getRole().equalsIgnoreCase("USER")) {
+            if (!feedbackRepository.existsByUserAndFacility(currentUser, facility)) {
+
+                feedback.setFacility(facility);
+                feedback.setUser(currentUser);
+
+
+                feedbackRepository.save(feedback);
+                redirectAttributes.addFlashAttribute("message", "Feedback added successfully");
+            }
+            else{
+                redirectAttributes.addFlashAttribute("error", "You have already reviewed this facility.");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Facility Users cannot review this facility.");
+            // Correctly redirect back to the specific facility's page
+
+        }
+
+        return "redirect:/facility/" + facilityId;
     }
 
 }

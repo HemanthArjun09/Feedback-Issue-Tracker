@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name ="feedback")
+@Table(name = "feedback", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_Id", "Facility_id"})
+})
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +18,7 @@ public class Feedback {
     @JoinColumn(name ="User_Id", nullable = true)
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Facility_Id")
     private Facility facility;
 
