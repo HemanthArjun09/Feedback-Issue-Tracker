@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Issue</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #F5F5DC; color: #5D4037; margin: 0; }
+        .container { max-width: 600px; margin: auto; background: #FAF0E6; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        h2 { text-align: center; color: #795548; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.2rem; font-weight: 600; }
+        input[type="text"], textarea { width: 100%; padding: 12px; border: 1px solid #D7CCC8; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; background-color: #A1887F; color: #ffffff; padding: 12px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; font-size: 1rem; }
+        .constraints{font-size: 0.6rem; padding-left: 0.5rem; color: #6c757d}
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+
+<div class="container">
+    <h2>Report a New Issue</h2>
+    <form th:action="@{/facility/{id}/issues(id=${facilityId})}" th:object="${issue}" method="post">
+
+        <div class="form-group">
+            <label for="title">Issue Title:</label>
+            <input type="text" id="title" th:field="*{title}"  required />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <div class="constraints">Max Characters 2500</div>
+            <textarea id="description"  th:field="*{description}" rows="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="priority">Priority:</label>
+            <select id="priority" th:field="*{priority}" required>
+                <option value="" disabled selected>-- Select a Priority --</option>
+                <option th:each="p : ${priorities}"
+                        th:value="${p}"
+                        th:text="${p}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit">Submit Issue</button>
+    </form>
+</div>
+</body>
+</html>
