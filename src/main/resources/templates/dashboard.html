@@ -58,7 +58,15 @@
       padding: 0px 10px;
       /* In dashboard.html, inside the <style> tag */
     }
+    #login-success-message {
+      font-family: 'Georgia', serif;
+      color: #2ECC71; /* A nice, vibrant green */
+      transition: opacity 0.5s ease-out; /* This creates the smooth fade-out effect */
+    }
 
+    #login-success-message.fade-out {
+      opacity: 0; /* This class will make the element invisible */
+    }
   </style>
 </head>
 <body>
@@ -68,7 +76,9 @@
 
 <div class="container">
   <h1>Welcome, <span th:text="${userName}">User</span>!</h1>
-  <p>You have successfully logged into the Feedback & Issue Tracker.</p>
+  <p th:if="${param.loginSuccess}" id="login-success-message">
+    You have successfully logged into the Feedback & Issue Tracker.
+  </p>
   <hr>
 
   <h2>Available Facilities</h2>
@@ -95,4 +105,27 @@
 </div>
 
 </body>
+<script>
+  // This script runs after the page has fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Find the success message element by its ID
+    const successMessage = document.getElementById('login-success-message');
+
+    // Check if the message element exists on the page
+    if (successMessage) {
+      // Set a timer for 5 seconds (5000 milliseconds)
+      setTimeout(function() {
+        // Add the 'fade-out' class to trigger the CSS transition
+        successMessage.classList.add('fade-out');
+
+        // Optional: After the fade-out animation, remove the element completely
+        setTimeout(function() {
+          successMessage.style.display = 'none';
+        }, 500); // This delay should match the CSS transition time
+
+      }, 5000); // 5-second delay
+    }
+  });
+</script>
 </html>

@@ -97,6 +97,9 @@
 
   <div id="Issues" class="tab-content">
     <h2>Issues</h2>
+    <a th:href="@{/facility/{id}/issues/new(id=${facility.getFacility_id()})}" class="btn-primary">
+      Report New Issue
+    </a>
     <table>
       <thead>
       <tr>

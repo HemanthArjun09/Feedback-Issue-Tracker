@@ -64,7 +64,7 @@ public class FacilityController {
         Feedback feedback = new Feedback();
 
         // 2. Fetch all issues for this facility
-        List<Issue> issues = issueRepository.findByFacility(facility);
+        List<Issue> issues = issueRepository.findByFacilityOrderByCreatedAtDesc(facility);
 
         // 3. Fetch all feedback for this facility
         List<Feedback> feedbackList = feedbackRepository.findByFacility(facility);

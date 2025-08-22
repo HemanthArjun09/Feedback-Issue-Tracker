@@ -6,6 +6,8 @@ import com.capstone.feedback.Model.User;
 // import com.capstone.feedback.service.UserService; // You'll create this service
 import com.capstone.feedback.Model.enums.User_Types;
 import com.capstone.feedback.Repository.UserRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,5 +66,18 @@ public class UserController {
 
 
         return "redirect:/login?NewUser=true";
+    }
+
+    @GetMapping("/account-details")
+    public String showAccountDetails(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        // Find the currently logged-in user from the database
+        User currentUser = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Add the user object to the model
+        model.addAttribute("user", currentUser);
+
+        // Return the name of our new HTML template
+        return "account-details";
     }
 }

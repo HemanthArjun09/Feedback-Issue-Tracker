@@ -45,6 +45,7 @@
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: #8D6E63;
+            padding-left: 1rem;
         }
 
         input[type="text"], input[type="number"] {
@@ -81,6 +82,9 @@
             background-color: #8D6E63; /* --- Darker Brown on Hover --- */
             transform: translateY(-2px);
         }
+        .form-check {
+            padding-left: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +100,7 @@
         <label>Location:</label>
         <input type="text" th:field="*{facility_Location}" required/>
     </div>
-    <div>
+    <div class="form-check">
         <select id="facility_type" th:field="*{facility_Type}" required>
 
             <option value="" disabled selected>Select a type</option>

@@ -87,11 +87,21 @@
             margin-left: 0.4rem;
             margin-bottom: 0;
         }
+        #login-failure {
+            font-family: 'Georgia', serif;
+            color: red;
+            transition: opacity 0.7s ease-out;
+            font-size: 0.9rem;
+        }
+        #login-form.fadeout {
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Login</h1>
+    <div id="login-failure" th:if="${param.error}">Please check your credential <br> (Your email or password is wrong)</div>
     <form action="/login" method="POST">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="Enter your email id" required>
@@ -107,4 +117,26 @@
     </div>
 </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Find the success message element by its ID
+        const loginFailure = document.getElementById('login-failure');
+
+        // Check if the message element exists on the page
+        if (loginFailure) {
+            // Set a timer for 5 seconds (5000 milliseconds)
+            setTimeout(function() {
+                // Add the 'fade-out' class to trigger the CSS transition
+                loginFailure.classList.add('fadeout');
+
+                // Optional: After the fade-out animation, remove the element completely
+                setTimeout(function() {
+                    loginFailure.style.display = 'none';
+                }, 500); // This delay should match the CSS transition time
+
+            }, 5000); // 5-second delay
+        }
+    });
+</script>
 </html>
