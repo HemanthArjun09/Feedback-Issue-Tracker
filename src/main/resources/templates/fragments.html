@@ -5,9 +5,10 @@
 <nav th:fragment="navbar" class="navbar">
     <style>
         .title{
-            font-family: 'Helvetica Neue', Arial, sans-serif; color: white; padding: 0 10px; float: left; line-height: 48px; margin: 0 10px 0 0;
-
+            font-family: 'Helvetica Neue', Arial, sans-serif; color: white; padding: 0 10px; float: left; line-height: 48px; margin: 0 5px 0 0;
+            text-decoration: none;
         }
+
 
         /* Navbar container */
              /* Navbar container */
@@ -15,6 +16,7 @@
              background-color: #795548;
              border-radius: 10px;
          }
+
 
         /* Modern clearfix to contain floated elements without side effects */
         .navbar::after {
@@ -38,17 +40,16 @@
             display: block;
             color: white;
             text-align: center;
-            padding: 14px 20px;
+            padding: 5px 15px; /* <-- REDUCED vertical padding from 14px to 10px */
             text-decoration: none;
             font-weight: normal;
-            transition: background-color 0.3s, transform 0.3s ease; /* ✅ Added transform for zoom effect */
+            transition: background-color 0.3s, transform 0.3s ease;
+        }
+        a{
+            margin-top: 20px;
         }
 
         /* Hover effect for main navigation links */
-        .navbar li a:hover, .navbar .dropdown:hover .dropbtn {
-            background-color: #5D4037;
-            transform: scale(1.1); /* ✅ Zoom in on hover */
-        }
 
         /* Title styling */
         .navbar .Title {
@@ -57,12 +58,13 @@
             float: left;
             padding: 0 15px;
             margin-right: 15px;
-            font-size: 1.6rem;
+            font-size: 1.5rem; /* Reduced from 1.6rem for better fit */
             font-weight: bold;
-            line-height: 48px;
+
             text-transform: uppercase;
-            text-decoration: none; /* Ensure title link is not underlined */
-            transition: transform 0.3s ease; /* ✅ Added transition for zoom effect */
+            text-decoration: none;
+
+            transition: transform 0.3s ease;
         }
         .navbar .Title:hover {
             transform: scale(1.1); /* ✅ Zoom in on hover */
@@ -86,9 +88,9 @@
         }
 
         /* Links inside the dropdown */
-        .dropdown-content a, .dropdown-content .logout-btn {
+        .dropdown-content a, .dropdown-content .logout-btn, .dropdown-content .account-details {
             color: #5D4037; /* ✅ Changed to dark brown for visibility */
-            padding: 12px 16px;
+            padding: 7px 16px;
             text-decoration: none;
             display: block;
             text-align: left;
@@ -103,20 +105,20 @@
         }
 
         /* Hover effect for dropdown links */
-        .dropdown-content a:hover, .dropdown-content .logout-btn:hover {
+        .dropdown-content a:hover, .dropdown-content .logout-btn:hover, .dropdown-content .account-details:hover {
             background-color: #d3c8bf;
+            border-radius: 5px;
+            transition: 0.3s ease-in-out;
         }
 
         /* Show the dropdown on hover */
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        .account-details{
-            color: black;
+
+        body {
+            cursor: url('/images/cursor.png'), auto;
         }
-
-
-
 
     </style>
 
@@ -138,6 +140,31 @@
         </li></th:block>
     </ul>
 </nav>
+
+<div th:fragment="commentThread(comment)">
+    <div th:class="${comment.isAdminComment} ? 'comment admin-comment' : 'comment'">
+        <div class="comment-header">
+            <strong th:text="${comment.user.firstName} + ' ' + ${comment.user.lastName}">User Name</strong>
+            <span th:text="${#temporals.format(comment.createdAt, 'dd-MMM-yyyy HH:mm')}">Date</span>
+        </div>
+        <p th:text="${comment.content}">Comment text.</p>
+
+        <details>
+            <summary style="cursor: pointer; font-size: 0.9em; color: #6D4C41;">Reply</summary>
+            <form th:action="@{/issue/{id}/comments(id=${comment.issue.issueId})}" method="post" style="margin-top: 10px;">
+                <textarea name="content" rows="2" placeholder="Write a reply..." required style="width: 95%;"></textarea>
+                <input type="hidden" name="parentId" th:value="${comment.id}" />
+                <br/><button type="submit" style="margin-top: 5px;">Post Reply</button>
+            </form>
+        </details>
+    </div>
+
+    <div th:if="${!comment.replies.isEmpty()}" style="margin-left: 40px; border-left: 2px solid #D7CCC8; padding-left: 15px;">
+        <div th:each="reply : ${comment.replies}" th:replace="~{fragments :: commentThread(comment=${reply})}">
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

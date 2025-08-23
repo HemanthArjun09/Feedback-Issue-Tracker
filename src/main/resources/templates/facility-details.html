@@ -111,10 +111,12 @@
       </thead>
       <tbody>
       <tr th:each="issue : ${issues}">
-        <td th:text="${issue.getTitle()}"></td>
-        <td th:text="${issue.getDescription()}"></td>
-        <td th:text="${issue.getStatus()}"></td>
-        <td th:text="${issue.getPriority()}"></td>
+        <td>
+          <a th:href="@{/issue/{id}(id=${issue.getIssue_id()})}" th:text="${issue.title}"></a>
+        </td>
+        <td th:text="${issue.description}"></td>
+        <td th:text="${issue.status}"></td>
+        <td th:text="${issue.priority}"></td>
       </tr>
       </tbody>
     </table>

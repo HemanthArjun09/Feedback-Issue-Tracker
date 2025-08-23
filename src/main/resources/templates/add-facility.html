@@ -3,39 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        /* --- Fonts & Body --- */
+        /* --- General Body and Font Styles --- */
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #F5F5DC; /* --- Light Beige Background --- */
-            color: #5D4037; /* --- Dark Brown Text --- */
+            background-color: #F5F5DC;
+            color: #5D4037;
             margin: 0;
-
+            padding-top: 2rem; /* Add padding at the top */
             line-height: 1.6;
         }
 
         /* --- Main Content Container --- */
         .container {
-            max-width: 600px; /* --- Made the form container a bit smaller --- */
-            margin: auto;
-            background: #FAF0E6; /* --- Linen/Off-white Container --- */
-            padding: 2rem 2.5rem;
+            max-width: 600px;
+            margin: 2rem auto;
+            background: #FAF0E6;
+            padding: 2.5rem;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             border: 1px solid #EFEBE9;
         }
 
-        /* --- Headings --- */
-        h2 {
+        /* --- Form Title --- */
+        .form-title {
             font-family: 'Georgia', serif;
-            color: #795548; /* --- Rich Brown for Headings --- */
+            color: #795548;
             font-weight: 400;
             text-align: center;
             border-bottom: 2px solid #D7CCC8;
             padding-bottom: 0.5rem;
+            margin-top: 0;
             margin-bottom: 2rem;
         }
 
-        /* --- Form Styling --- */
+        /* --- Form Grouping --- */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -45,31 +46,35 @@
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: #8D6E63;
-            padding-left: 1rem;
         }
 
-        input[type="text"], input[type="number"] {
+        /* --- Input and Select Styling --- */
+        input[type="text"],
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid #D7CCC8;
             border-radius: 8px;
             background-color: #FBFBFB;
-            box-sizing: border-box; /* --- Ensures padding doesn't affect width --- */
-            transition: border-color 0.3s;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        input[type="text"]:focus, input[type="number"]:focus {
+        /* ✅ New, improved focus style */
+        input[type="text"]:focus,
+        select:focus {
             outline: none;
             border-color: #A1887F;
+            box-shadow: 0 0 0 3px rgba(161, 136, 127, 0.25);
         }
 
         /* --- Button Styling --- */
         button {
-            width: 100%;
-            background-color: #A1887F; /* --- Muted Brown Button --- */
+            width: 10%;
+            background-color: #A1887F;
             color: #ffffff;
             padding: 12px 20px;
-            text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
             border: none;
@@ -79,11 +84,8 @@
         }
 
         button:hover {
-            background-color: #8D6E63; /* --- Darker Brown on Hover --- */
+            background-color: #8D6E63;
             transform: translateY(-2px);
-        }
-        .form-check {
-            padding-left: 1rem;
         }
     </style>
 </head>

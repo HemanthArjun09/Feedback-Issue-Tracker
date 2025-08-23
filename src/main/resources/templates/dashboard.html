@@ -11,6 +11,7 @@
       margin: 0;
       /*padding: 1.5rem;*/
       line-height: 1.6;
+      cursor: url('/images/cursor.png'), auto;
     }
 
     /* --- Container, Headings, and other styles from before --- */
@@ -33,15 +34,25 @@
 
 
     /* --- Table Styling from before --- */
+    /* In the <style> tag of dashboard.html */
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+    border : 1px solid rgba(0, 0, 0, 0.02);
+
+      /* --- Add these two lines for the rounded effect --- */
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+
     }
     th, td {
       padding: 15px;
       text-align: left;
-      border-bottom: 1px solid #D7CCC8;
+      /*border-bottom: 1px solid #D7CCC8;*/
     }
     thead th {
       background-color: #EFEBE9;
