@@ -2,16 +2,11 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // Find the button by its ID
-    const learnMoreBtn = document.getElementById('learnMoreBtn');
+    const logos  = document.querySelectorAll('.animated-logo');
 
     // Check if the button exists
-    if (learnMoreBtn) {
-        // Add a click event listener
-        learnMoreBtn.addEventListener('click', function() {
-            // Display an alert when the button is clicked
-            alert('Thanks for your interest! More features are coming soon.');
-        });
-    }
+    logos.forEach(logo => {
+        logo.classList.add('compressed');
+    })
 
-    console.log("Custom script loaded successfully!");
 });

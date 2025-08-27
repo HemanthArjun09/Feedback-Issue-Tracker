@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="${facility.getFacility_Name()} + ' | Details'"></title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
   <style>
     body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #F5F5DC; color: #5D4037; margin: 0; line-height: 1.6; }
     .tab-container { width: 80%; margin: 2rem auto; }
@@ -137,10 +138,14 @@
         </fieldset>
 
         <div>
-          <input type="text" name="Title" placeholder="Feedback Title" required />
+          <label>
+            <input type="text" th:field="*{title}" placeholder="Feedback Title" required />
+          </label>
         </div>
         <div>
-          <textarea name="Description" rows="4" placeholder="Describe your experience..." required></textarea>
+          <label>
+            <textarea th:field="*{description}" rows="4" placeholder="Describe your experience..." required></textarea>
+          </label>
         </div>
 
         <button type="submit">Post Feedback</button>
@@ -209,6 +214,6 @@
     });
   });
 </script>
-
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>

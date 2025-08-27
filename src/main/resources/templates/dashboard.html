@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+
   <style>
     body {
       font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -19,7 +21,7 @@
       max-width: 900px;
       margin: auto;
       background: #FAF0E6;
-      padding: 2rem 2.5rem;
+      padding: 0.5rem 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
       border: 1px solid #EFEBE9;
@@ -29,13 +31,11 @@
       font-family: 'Georgia', serif;
       color: #795548;
       font-weight: 400;
+      text-align: center;
+      padding: 0rem;
     }
 
-
-
     /* --- Table Styling from before --- */
-    /* In the <style> tag of dashboard.html */
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -66,18 +66,21 @@
     h4{
       font-family: 'Helvetica Neue', Arial, sans-serif;
       color: white;
-      padding: 0px 10px;
+
       /* In dashboard.html, inside the <style> tag */
     }
     #login-success-message {
       font-family: 'Georgia', serif;
       color: #2ECC71; /* A nice, vibrant green */
+
       transition: opacity 0.5s ease-out; /* This creates the smooth fade-out effect */
     }
 
     #login-success-message.fade-out {
       opacity: 0; /* This class will make the element invisible */
     }
+
+
   </style>
 </head>
 <body>
@@ -92,7 +95,7 @@
   </p>
   <hr>
 
-  <h2>Available Facilities</h2>
+  <h2 >Available Facilities</h2>
   <table border="1" style="margin: auto; border-collapse: collapse; width: 80%;">
     <thead>
     <tr>
@@ -138,5 +141,64 @@
       }, 5000); // 5-second delay
     }
   });
+
+
+  /**
+   * Animates the app logo by expanding it to its full text.
+   * This should be called after a successful login.
+   */
+  function expandLogo() {
+    const logo = document.getElementById('app-logo');
+    if (logo) {
+      logo.classList.add('expanded');
+    }
+  }
+
+  /**
+   * Reverts the logo animation to its acronym state.
+   * This could be called on logout.
+   */
+  function compressLogo() {
+    const logo = document.getElementById('login-success-message');
+    if (logo) {
+      logo.classList.remove('expanded');
+    }
+  }
+
+  // --- EXAMPLE: HOW TO USE IT ---
+  // You would integrate this with your actual login form submission logic.
+
+  // Assuming you have a login form with id="loginForm"
+  const loginForm = document.getElementById('loginForm');
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevents the form from submitting normally
+
+      // 1. Get username and password from the form
+      // const username = ...
+      // const password = ...
+
+      // 2. Send these details to your Spring Boot backend API to authenticate.
+      // fetch('/api/login', { ... })
+      // .then(response => {
+      //     if (response.ok) {
+      //         // --- ON SUCCESS ---
+      //         console.log("Login successful!");
+
+      //         // Animate the logo
+      //         expandLogo();
+
+      //         // Redirect to the dashboard after the animation plays
+      //         setTimeout(() => {
+      //             window.location.href = '/dashboard'; // Or your main page
+      //         }, 1000); // Wait 1 second (1000ms)
+      //     } else {
+      //         // Handle login failure
+      //         console.error("Login failed.");
+      //     }
+      // });
+    });
+  }
 </script>
 </html>

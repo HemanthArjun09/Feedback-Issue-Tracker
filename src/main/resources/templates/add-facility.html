@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
     <style>
         /* --- General Body and Font Styles --- */
         body {
@@ -9,8 +11,8 @@
             background-color: #F5F5DC;
             color: #5D4037;
             margin: 0;
-            padding-top: 2rem; /* Add padding at the top */
-            line-height: 1.6;
+
+            line-height: 1;
         }
 
         /* --- Main Content Container --- */
@@ -116,5 +118,6 @@
     </div>
     <button type="submit">Save Facility</button>
 </form>
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>
