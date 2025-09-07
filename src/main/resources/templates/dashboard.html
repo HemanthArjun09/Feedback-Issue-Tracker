@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
-
+  <script th:src="@{/js/script.js}" defer></script>
   <style>
     body {
       font-family: 'Helvetica Neue', Arial, sans-serif;
-      background-color: #F5F5DC;
-      color: #5D4037;
+      background-color: #ffffff;
+      color: #000000;
       margin: 0;
       /*padding: 1.5rem;*/
       line-height: 1.6;
@@ -19,8 +19,8 @@
     /* --- Container, Headings, and other styles from before --- */
     .container {
       max-width: 900px;
-      margin: auto;
-      background: #FAF0E6;
+      margin: 50px auto;
+      background: #ffffff;
       padding: 0.5rem 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -29,10 +29,10 @@
 
     h1, h2 {
       font-family: 'Georgia', serif;
-      color: #795548;
+      color: #000000;
       font-weight: 400;
       text-align: center;
-      padding: 0rem;
+
     }
 
     /* --- Table Styling from before --- */
@@ -57,10 +57,10 @@
     thead th {
       background-color: #EFEBE9;
       font-weight: 600;
-      color: #6D4C41;
+      color: #000000;
     }
     tbody tr:hover {
-      background-color: #d3c8bf;
+      background-color: #d8d8d8;
 
     }
     h4{
@@ -80,8 +80,7 @@
       opacity: 0; /* This class will make the element invisible */
     }
 
-
-  </style>
+    </style>
 </head>
 <body>
 
@@ -119,7 +118,7 @@
 </div>
 
 </body>
-<script>
+<script >
   // This script runs after the page has fully loaded
   document.addEventListener('DOMContentLoaded', function() {
 
@@ -141,64 +140,24 @@
       }, 5000); // 5-second delay
     }
   });
+  // This script runs after the page has fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Find all elements with the class 'animated-logo'
+    const successMessage = document.getElementById('login-success-message');
+    const logos = document.getElementById('animated-logo');
+    if (successMessage) {
+      logos.classList.add('expanded');
 
 
-  /**
-   * Animates the app logo by expanding it to its full text.
-   * This should be called after a successful login.
-   */
-  function expandLogo() {
-    const logo = document.getElementById('app-logo');
-    if (logo) {
-      logo.classList.add('expanded');
+      setTimeout(function () {
+        // Add the 'compressed' class to each logo to trigger the CSS animation
+        logos.classList.remove('expanded');
+
+      }, 3000); // 3-second delay
     }
-  }
+  });
 
-  /**
-   * Reverts the logo animation to its acronym state.
-   * This could be called on logout.
-   */
-  function compressLogo() {
-    const logo = document.getElementById('login-success-message');
-    if (logo) {
-      logo.classList.remove('expanded');
-    }
-  }
 
-  // --- EXAMPLE: HOW TO USE IT ---
-  // You would integrate this with your actual login form submission logic.
-
-  // Assuming you have a login form with id="loginForm"
-  const loginForm = document.getElementById('loginForm');
-
-  if (loginForm) {
-    loginForm.addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevents the form from submitting normally
-
-      // 1. Get username and password from the form
-      // const username = ...
-      // const password = ...
-
-      // 2. Send these details to your Spring Boot backend API to authenticate.
-      // fetch('/api/login', { ... })
-      // .then(response => {
-      //     if (response.ok) {
-      //         // --- ON SUCCESS ---
-      //         console.log("Login successful!");
-
-      //         // Animate the logo
-      //         expandLogo();
-
-      //         // Redirect to the dashboard after the animation plays
-      //         setTimeout(() => {
-      //             window.location.href = '/dashboard'; // Or your main page
-      //         }, 1000); // Wait 1 second (1000ms)
-      //     } else {
-      //         // Handle login failure
-      //         console.error("Login failed.");
-      //     }
-      // });
-    });
-  }
 </script>
 </html>

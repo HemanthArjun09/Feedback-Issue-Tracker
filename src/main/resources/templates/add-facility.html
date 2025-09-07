@@ -7,53 +7,45 @@
     <style>
         /* --- General Body and Font Styles --- */
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #F5F5DC;
-            color: #5D4037;
-            margin: 0;
 
-            line-height: 1;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
         }
 
         /* --- Main Content Container --- */
-        .container {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: #FAF0E6;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid #EFEBE9;
-        }
 
-        /* --- Form Title --- */
-        .form-title {
-            font-family: 'Georgia', serif;
-            color: #795548;
-            font-weight: 400;
-            text-align: center;
-            border-bottom: 2px solid #D7CCC8;
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-            margin-bottom: 2rem;
-        }
-
-        /* --- Form Grouping --- */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
 
         label {
+            margin-left: 1rem;
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #8D6E63;
+            color: #000000;
+            margin-top: 0.75rem;
+        }
+        select{
+            margin-left: 1rem;
+            margin-top: 1rem;
+            max-width: initial;
+            padding: 12px;
+            border: 1px solid #D7CCC8;
+            border-radius: 8px;
+            background-color: #FBFBFB;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+
         }
 
+
         /* --- Input and Select Styling --- */
-        input[type="text"],
-        select {
-            width: 100%;
+        input[type="text"]
+         {
+            margin-left: 1rem;
+            width: 80%;
+
             padding: 12px;
             border: 1px solid #D7CCC8;
             border-radius: 8px;
@@ -66,6 +58,7 @@
         /* ✅ New, improved focus style */
         input[type="text"]:focus,
         select:focus {
+            margin-left: 1rem;
             outline: none;
             border-color: #A1887F;
             box-shadow: 0 0 0 3px rgba(161, 136, 127, 0.25);
@@ -73,8 +66,9 @@
 
         /* --- Button Styling --- */
         button {
-            width: 10%;
-            background-color: #A1887F;
+            margin-left: 1rem;
+            width: auto;
+            background-color: #878787;
             color: #ffffff;
             padding: 12px 20px;
             border-radius: 8px;
@@ -82,14 +76,24 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            margin-top: 1rem;
             transition: background-color 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: #8D6E63;
-            transform: translateY(-2px);
+            margin-left: 1rem;
+            background-color: #b5b5b5;
+            color: #000000;
+            transform: Scale(1.075);
+            transition: ease-in-out 0.3s;
         }
+
+        h2{
+            margin-left: 1rem;
+        }
+
     </style>
+    <title>FIT</title>
 </head>
 <body>
 <div th:replace="~{fragments :: navbar}"></div>

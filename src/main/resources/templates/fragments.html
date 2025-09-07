@@ -2,24 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <style>
-        a{
-            text-decoration: none;
-        }
-
-    </style>
 </head>
 <body>
 
 <nav th:fragment="navbar" class="navbar">
 
+    <a href="/dashboard" style="text-decoration: none; color: inherit;">
+    <div class="animated-logo" onmouseover="classList.add('expanded')" onmouseout="classList.remove('expanded')" id = "animated-logo">
 
-    <div class="animated-logo">
-        <a class="navbar-brand" href="#" id="app-logo">
-            <span id="logo-acronym">FIT</span>
-            <span id="logo-full-text"> &nbsp;Feedback & Issue Tracker</span>
-        </a>
+    <span class="logo-letter">F</span><span  class="logo-rest">eedback & </span>
+    <span class="logo-letter">I</span><span  class="logo-rest">ssue </span>
+    <span class="logo-letter">T</span><span  class="logo-rest">racker</span>
     </div>
+    </a>
     <ul>
         <th:block th:if="${ userRole != null and (userRole == 'ROLE_ADMIN' or userRole =='FACILITY_USER')}">
             <li>

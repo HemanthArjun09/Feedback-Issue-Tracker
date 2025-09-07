@@ -30,6 +30,7 @@ public class DashboardContoller {
     public String showDashboard(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
         List<Facility> facilities = facilityRepository.findAll();
+        
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

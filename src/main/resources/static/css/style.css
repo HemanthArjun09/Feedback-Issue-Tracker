@@ -1,7 +1,6 @@
-/* Navbar container */
-/* Navbar container */
+
 .navbar {
-    background-color: #c5bcb3;
+    background-color: #c1c1c1;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -32,9 +31,7 @@
     font-weight: normal;
     transition: background-color 0.3s, transform 0.3s ease;
 }
-a{
-    margin-top: 20px;
-}
+
 /* Title styling */
 .navbar .Title {
     font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -64,7 +61,7 @@ a{
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #d3c8bf; /* ✅ Changed to beige to match UI */
+    background-color: #ffffff; /* ✅ Changed to beige to match UI */
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     padding: 5px ;
@@ -74,12 +71,11 @@ a{
 
 /* Links inside the dropdown */
 .dropdown-content a, .dropdown-content .logout-btn, .dropdown-content .account-details {
-    color: #5D4037; /* ✅ Changed to dark brown for visibility */
-    padding: 7px 0px;
+    color: #000000; /* ✅ Changed to dark brown for visibility */
+    padding: 7px 0;
     text-decoration: none;
     display: block;
     text-align : -moz-left;
-    margin: 0px auto;
 }
 .dropdown-content .logout-btn {
     width: 100%;
@@ -87,12 +83,13 @@ a{
     font-family: inherit;
     font-size: 1rem;
     border-radius: 5px;
-    background-color: #d3c8bf;
+    color: #000000;
+    background-color: #ffffff;
 }
 
 /* Hover effect for dropdown links */
 .dropdown-content a:hover, .dropdown-content .logout-btn:hover, .dropdown-content .account-details:hover {
-    background-color: #81786f;
+    background-color: #939393;
     border-radius: 5px;
     color: #ffffff;
     transition: 0.3s ease-in-out;
@@ -103,23 +100,40 @@ a{
     display: block;
 }
 
-#app-logo {
-    display: flex;
-    align-items: center;
-    transition: all 0.5s ease-in-out;
+.animated-logo {
+    display: inline-flex; /* Use flexbox to keep letters and words together */
+    align-items: baseline;
+    overflow: hidden; /* Helps hide the text as it shrinks */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-transform: uppercase;
+    white-space: nowrap; /* Prevents the logo from wrapping to a new line */
+    float: left;
 }
 
-/* By default, the full text is hidden */
-#logo-full-text {
-    max-width: 0;
+/* Style for the main letters (F, I, T) */
+.logo-letter {
+    font-weight: bold;
+    font-size: 1.6rem; /* Adjust size as needed for navbar vs login page */
+}
+
+.logo-rest {
+    font-size: 1.6rem;
+    font-weight: 300;
     opacity: 0;
-    overflow: hidden;
-    transition: max-width 0.5s ease-out, opacity 0.3s ease-out;
-    white-space: nowrap; /* Prevents text from wrapping during animation */
+    max-width: 0;
+    overflow: hidden; /* Prevents text from being visible as it shrinks */
+    white-space: nowrap;
+    transition: max-width 0.8s ease-in-out, opacity 0.5s ease-in;
 }
 
-/* This 'expanded' class will be added by JavaScript to trigger the animation */
-#app-logo.expanded #logo-full-text {
-    max-width: 500px; /* A value larger than the text's actual width */
-    opacity: 1;
+/* This is the "expanded" state, triggered ONLY by JavaScript */
+.animated-logo.expanded .logo-rest {
+    max-width: 500px; /* Allows the text to take up space */
+    opacity: 1;       /* Makes the text visible */
+    transition: ease-in-out 1s;
+}
+
+
+a{
+    text-decoration: none;
 }

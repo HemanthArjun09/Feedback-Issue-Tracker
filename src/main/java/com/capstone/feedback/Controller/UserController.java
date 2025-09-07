@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -80,4 +81,28 @@ public class UserController {
         // Return the name of our new HTML template
         return "account-details";
     }
+
+    // ✅ ADD THIS NEW METHOD TO HANDLE UPDATES
+    @PostMapping("/account-details")
+    public String updateAccountDetails(@ModelAttribute User formUser,
+                                       @AuthenticationPrincipal UserDetails userDetails,
+                                       RedirectAttributes redirectAttributes) {
+
+        // 1. Find the currently logged-in user in the database
+        User currentUser = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 2. Update only the fields we want to allow changing
+        currentUser.setFirstName(formUser.getFirstName());
+        currentUser.setLastName(formUser.getLastName());
+        currentUser.setMobileNumber(formUser.getMobileNumber());
+
+        // 3. Save the updated user object
+        userRepository.save(currentUser);
+
+        // 4. Add a success message and redirect
+        redirectAttributes.addFlashAttribute("successMessage", "Your details have been updated successfully!");
+        return "redirect:/account-details";
+
+}
 }
