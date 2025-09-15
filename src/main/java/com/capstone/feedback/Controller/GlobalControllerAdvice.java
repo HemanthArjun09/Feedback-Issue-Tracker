@@ -15,7 +15,7 @@ public class GlobalControllerAdvice {
     @Autowired
     private UserRepository userRepository;
 
-    // This method makes 'userName' available on all pages
+    // This method is fine as is, it needs the database call
     @ModelAttribute("userName")
     public String addUserNameToModel() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -27,14 +27,18 @@ public class GlobalControllerAdvice {
         return null;
     }
 
-    // This method makes 'userRole' available on all pages
+    // ✅ This version is more efficient - NO DATABASE CALL
     @ModelAttribute("userRole")
     public String addUserRoleToModel() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-            return (user != null) ? user.getRole() : null;
+
+            // Get role directly from the authorities list, assuming one role per user
+            return userDetails.getAuthorities().stream()
+                    .findFirst()
+                    .map(Object::toString)
+                    .orElse(null);
         }
         return null;
     }

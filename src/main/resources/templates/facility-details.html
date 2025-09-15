@@ -95,6 +95,15 @@
 
     .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
     .alert-danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+    tr.issue-resolved td {
+      color: #8e8e8e; /* A medium grey color */
+      text-decoration: line-through; /* Puts a line through the text */
+    }
+
+    /* This makes sure the link inside a resolved row is also grey */
+    tr.issue-resolved td a {
+      color: #8e8e8e;
+    }
   </style>
 </head>
 <body>
@@ -126,7 +135,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="issue : ${issues}">
+      <tr th:each="issue : ${issues}"
+          th:classappend="${issue.status.name() == 'RESOLVED'} ? 'issue-resolved' : ''">
         <td>
           <a th:href="@{/issue/{id}(id=${issue.getIssue_id()})}" th:text="${issue.title}"></a>
         </td>
@@ -187,6 +197,7 @@
 </div>
 
 <script>
+
   function openTab(evt, tabName) {
     // Hide all tab content
     let tabcontent = document.getElementsByClassName("tab-content");

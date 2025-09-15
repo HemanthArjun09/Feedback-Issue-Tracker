@@ -1,6 +1,7 @@
 package com.capstone.feedback.Model;
 
 import com.capstone.feedback.Model.enums.Issue_Priority;
+import com.capstone.feedback.Model.enums.Issue_Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class Issue {
     private Issue_Priority priority;
 
     @Column(name ="Status")
-    private String status;
+    private Issue_Status status;
 
     @Column(name ="created_at")
     private LocalDateTime createdAt;
@@ -84,11 +85,11 @@ public class Issue {
         this.priority = priority;
     }
 
-    public String getStatus() {
+    public Issue_Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Issue_Status status) {
         this.status = status;
     }
 

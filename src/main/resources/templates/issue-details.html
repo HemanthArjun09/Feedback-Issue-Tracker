@@ -51,7 +51,21 @@
 <div class="issue-details">
     <div class="issue-header">
         <h1 th:text="${issue.title}">Issue Title</h1>
-        <span class="issue-status" th:text="${issue.status}">OPEN</span>
+
+        <div th:if="${userRole == 'ROLE_ADMIN' or userRole == 'FACILITY_USER'}">
+            <form id="status-update-form" th:action="@{/issue/{id}/status(id=${issueId})}" method="post">
+                <label for="status-dropdown"><select name="status" id="status-dropdown" th:attr="data-original-status=${issue.status}">
+                    <option th:each="s : ${allStatuses}"
+                            th:value="${s}"
+                            th:text="${s.name()}"
+                            th:selected="${s == issue.status}">
+                    </option>
+                </select></label>
+            </form>
+        </div>
+        <div th:if="${userRole == 'ROLE_USER'}">
+            <span class="issue-status" th:text="${issue.status.name()}">OPEN</span>
+        </div>
     </div>
 
     Priority: <span class="issue-priority" th:text="${issue.priority}">Priority</span>
@@ -76,6 +90,27 @@
         <p th:text="${comment.content}">Comment text goes here.</p>
     </div>
 
+
+
 <script th:src="@{/js/script.js}"></script>
+
+<script>
+    const statusDropdown = document.getElementById('status-dropdown');
+
+    if (statusDropdown) {
+        statusDropdown.addEventListener('change', function() {
+            const selectedText = this.options[this.selectedIndex].text;
+            const originalStatus = this.getAttribute('data-original-status');
+            const isConfirmed = confirm('Are you sure you want to change the status to "' + selectedText + '"?');
+
+            if (isConfirmed) {
+                document.getElementById('status-update-form').submit();
+            } else {
+                this.value = originalStatus;
+            }
+        });
+    }
+</script>
+
 </body>
 </html>

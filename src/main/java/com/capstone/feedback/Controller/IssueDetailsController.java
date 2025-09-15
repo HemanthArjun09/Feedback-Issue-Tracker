@@ -3,6 +3,7 @@ package com.capstone.feedback.Controller;
 import com.capstone.feedback.Model.Comment;
 import com.capstone.feedback.Model.Issue;
 import com.capstone.feedback.Model.User;
+import com.capstone.feedback.Model.enums.Issue_Status;
 import com.capstone.feedback.Repository.CommentRepository;
 import com.capstone.feedback.Repository.IssueRepository;
 import com.capstone.feedback.Repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +36,9 @@ public class IssueDetailsController {
         model.addAttribute("issue", issue);
         model.addAttribute("comments", comments);
         model.addAttribute("newComment", new Comment()); // For the form
+
+        model.addAttribute("allStatuses", Issue_Status.values());
+
         return "issue-details";
     }
 
@@ -62,4 +67,46 @@ public class IssueDetailsController {
 
         return "redirect:/issue/" + issueId;
     }
+
+    // In IssueDetailsController.java
+    @PostMapping("/issue/{issueId}/status")
+    public String updateStatus(@PathVariable("issueId") int issueId,
+                               @RequestParam("status") Issue_Status status,
+                               @AuthenticationPrincipal UserDetails userDetails,
+                               RedirectAttributes redirectAttributes) {
+
+        User currentUser = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Issue issue = issueRepository.findById(issueId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + issueId));
+
+        // Security Check
+        String userRole = currentUser.getRole();
+        boolean isAdmin = "ROLE_ADMIN".equals(userRole);
+
+        boolean isAssignedFacilityAdmin = "FACILITY_USER".equals(userRole);
+
+        if (isAdmin || isAssignedFacilityAdmin) {
+            Issue_Status oldStatus = issue.getStatus();
+            if (oldStatus != status) {
+                issue.setStatus(status);
+                issueRepository.save(issue);
+
+                // Auto-generate a comment for the status change
+                Comment autoComment = new Comment();
+                autoComment.setIssue(issue);
+                autoComment.setUser(currentUser);
+                autoComment.setCreatedAt(LocalDateTime.now());
+                autoComment.setAdminComment(true);
+                autoComment.setContent("Administrator updated status from '" + oldStatus.name() + "' to '" + status.name() + "'.");
+                commentRepository.save(autoComment);
+
+                redirectAttributes.addFlashAttribute("message", "Issue status updated successfully!");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("error", "You are not authorized to modify this issue.");
+        }
+        return "redirect:/issue/" + issueId;
+    }
+
 }

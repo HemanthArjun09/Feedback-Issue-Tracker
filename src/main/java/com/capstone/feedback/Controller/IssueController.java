@@ -4,6 +4,7 @@ import com.capstone.feedback.Model.Facility;
 import com.capstone.feedback.Model.Issue;
 import com.capstone.feedback.Model.User;
 import com.capstone.feedback.Model.enums.Issue_Priority;
+import com.capstone.feedback.Model.enums.Issue_Status;
 import com.capstone.feedback.Repository.FacilityRepository;
 import com.capstone.feedback.Repository.IssueRepository;
 import com.capstone.feedback.Repository.UserRepository;
@@ -51,11 +52,13 @@ public class IssueController {
         issue.setFacility(facility);
         issue.setUser(currentUser);
         issue.setCreated_At(LocalDateTime.now());
-        issue.setStatus("OPEN"); // Default status
+        issue.setStatus(Issue_Status.OPEN); // Default status
 
 
         issueRepository.save(issue);
 
         return "redirect:/facility/" + facilityId;
     }
+
+
 }

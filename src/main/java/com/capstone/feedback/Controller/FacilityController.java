@@ -5,6 +5,8 @@ import com.capstone.feedback.Model.Feedback;
 import com.capstone.feedback.Model.Issue;
 import com.capstone.feedback.Model.User;
 import com.capstone.feedback.Model.enums.Facility_Types;
+import com.capstone.feedback.Model.enums.Issue_Status;
+import com.capstone.feedback.Model.enums.User_Types;
 import com.capstone.feedback.Repository.FacilityRepository;
 import com.capstone.feedback.Repository.FeedbackRepository;
 import com.capstone.feedback.Repository.IssueRepository;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class FacilityController {
@@ -74,6 +78,9 @@ public class FacilityController {
         model.addAttribute("issues", issues);
         model.addAttribute("feedbackList", feedbackList);
         model.addAttribute("newFeedback", feedback);
+        List<Issue_Status> statuses = Arrays.stream(Issue_Status.values())
+                .collect(Collectors.toList());
+        model.addAttribute("issue_status", statuses);
 
         // 5. Return the new template
         return "facility-details";
