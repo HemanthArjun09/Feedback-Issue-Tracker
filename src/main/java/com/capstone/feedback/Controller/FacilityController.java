@@ -6,11 +6,12 @@ import com.capstone.feedback.Model.Issue;
 import com.capstone.feedback.Model.User;
 import com.capstone.feedback.Model.enums.Facility_Types;
 import com.capstone.feedback.Model.enums.Issue_Status;
-import com.capstone.feedback.Model.enums.User_Types;
 import com.capstone.feedback.Repository.FacilityRepository;
 import com.capstone.feedback.Repository.FeedbackRepository;
 import com.capstone.feedback.Repository.IssueRepository;
 import com.capstone.feedback.Repository.UserRepository;
+import org.apache.juli.logging.LogFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +42,7 @@ public class FacilityController {
     // This method shows the form for adding a new facility
     @GetMapping("/add-facility")
     public String showAddFacilityForm(Model model) {
+
         // Create a new, empty facility object to bind to the form
         model.addAttribute("facility", new Facility());
         model.addAttribute("facilityTypes", Facility_Types.values());

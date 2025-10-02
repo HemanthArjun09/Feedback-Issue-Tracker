@@ -5,14 +5,13 @@
         <title th:text="${issue.title}"></title>
         <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #F5F5DC; color: #5D4037; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #ffffff; color: #000000; }
         .container { width: 70%; margin: 2rem auto; }
-        .issue-details, .comment, .comment-form { background: #FAF0E6; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .comment-header { display: flex; justify-content: space-between; font-size: 0.9em; color: #8D6E63; }
-        .admin-comment { border-left: 5px solid #A1887F; }
-        textarea { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; }
-        button { background-color: #A1887F; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
-        /* In the <style> block of issue-details.html */
+        .issue-details, .comment, .comment-form { background: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        .comment-header { display: flex; justify-content: space-between; font-size: 0.9em; color: #000000; }
+        .admin-comment { border-left: 5px solid #000000; }
+        textarea { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #000000; }
+        button { background-color: #c5c5c5; color: #000000; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
 
         .issue-header {
             display: flex;                 /* Turns on Flexbox layout */
@@ -27,8 +26,8 @@
         }
 
         .issue-status {
-            background-color: #A1887F;
-            color: white;
+            background-color: #ffffff;
+            color: #020202;
             padding: 5px 15px;
             border-radius: 15px; /* Creates the "pill" shape */
             font-size: 0.9rem;
@@ -41,8 +40,9 @@
             display: inline-block;
             margin-top: 0.5rem;
             font-weight: 500;
-            color: #8D6E63;
+            color: #000000;
         }
+
     </style>
 </head>
 <body>
