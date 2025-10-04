@@ -1,10 +1,12 @@
 package com.capstone.feedback.Controller;
 
 import com.capstone.feedback.Model.Comment;
+import com.capstone.feedback.Model.Facility;
 import com.capstone.feedback.Model.Issue;
 import com.capstone.feedback.Model.User;
 import com.capstone.feedback.Model.enums.Issue_Status;
 import com.capstone.feedback.Repository.CommentRepository;
+import com.capstone.feedback.Repository.FacilityRepository;
 import com.capstone.feedback.Repository.IssueRepository;
 import com.capstone.feedback.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class IssueDetailsController {
     @Autowired private IssueRepository issueRepository;
     @Autowired private CommentRepository commentRepository;
     @Autowired private UserRepository userRepository;
+    @Autowired
+    private FacilityRepository facilityRepository;
 
     // Display the issue and its comments
     @GetMapping("/issue/{issueId}")
@@ -31,7 +35,7 @@ public class IssueDetailsController {
         Issue issue = issueRepository.findById(issueId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + issueId));
 
-        List<Comment> comments = commentRepository.findByIssueAndParentCommentIsNullOrderByCreatedAtAsc(issue);
+        List<Comment> comments = commentRepository.findByIssueAndParentCommentIsNullOrderByCreatedAtDesc(issue);
 
         model.addAttribute("issue", issue);
         model.addAttribute("comments", comments);
@@ -77,14 +81,25 @@ public class IssueDetailsController {
 
         User currentUser = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
         Issue issue = issueRepository.findById(issueId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue Id:" + issueId));
+
+        Facility facility = facilityRepository.findById(issue.getFacility().getFacility_id())
+                .orElseThrow(() -> new RuntimeException("Facility not found"));
+
+
 
         // Security Check
         String userRole = currentUser.getRole();
         boolean isAdmin = "ROLE_ADMIN".equals(userRole);
 
-        boolean isAssignedFacilityAdmin = "FACILITY_USER".equals(userRole);
+        boolean isAssignedFacilityAdmin = false;
+        if(  facility.getFacilityAdmin()!= null){
+            if(facility.getFacilityAdmin().getUserId().equals(currentUser.getUserId())){
+                isAssignedFacilityAdmin = true;
+            }
+        }
 
         if (isAdmin || isAssignedFacilityAdmin) {
             Issue_Status oldStatus = issue.getStatus();

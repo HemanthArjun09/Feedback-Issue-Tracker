@@ -1,6 +1,6 @@
 
 .navbar {
-    background-color: #F5F0E1;
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -61,7 +61,7 @@
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #F5F0E1; /* ✅ Changed to beige to match UI */
+    background-color: #ffffff; /* ✅ Changed to beige to match UI */
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     padding: 5px ;
@@ -84,7 +84,7 @@
     font-size: 1rem;
     border-radius: 5px;
     color: #000000;
-    background-color: #F5F0E1;
+    background-color: #ffffff;
 }
 
 /* Hover effect for dropdown links */
@@ -132,6 +132,15 @@
     opacity: 1;       /* Makes the text visible */
     transition: ease-in-out 1s;
 }
+.add-accommodation:hover {
+    background-color: #939393;
+    border-radius: 5px;
+    padding: 3px;
+}
+.add-accommodation {
+    margin-left: 3px;
+}
+
 
 
 a{

@@ -8,5 +8,5 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     // Find all comments for an issue that are NOT replies (i.e., top-level comments)
-    List<Comment> findByIssueAndParentCommentIsNullOrderByCreatedAtAsc(Issue issue);
+    List<Comment> findByIssueAndParentCommentIsNullOrderByCreatedAtDesc(Issue issue);
 }

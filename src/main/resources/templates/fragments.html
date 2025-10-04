@@ -18,7 +18,7 @@
     <ul>
         <th:block th:if="${ userRole != null and (userRole == 'ROLE_ADMIN' or userRole =='FACILITY_USER')}">
             <li>
-                <a href="/add-facility">Add Accommodation</a>
+                <a class="add-accommodation" href="/add-facility">Add Accommodation</a>
             </li>
         </th:block>
         <th:block>

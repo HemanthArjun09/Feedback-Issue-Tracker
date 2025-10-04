@@ -5,11 +5,11 @@
         <title th:text="${issue.title}"></title>
         <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #ffffff; color: #000000; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #F5F0E1; color: #000000; }
         .container { width: 70%; margin: 2rem auto; }
         .issue-details, .comment, .comment-form { background: #ffffff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
         .comment-header { display: flex; justify-content: space-between; font-size: 0.9em; color: #000000; }
-        .admin-comment { border-left: 5px solid #000000; }
+        .admin-comment { border-left: 5px solid #000000; margin : 0.5rem; padding: 0.5rem; }
         textarea { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #000000; }
         button { background-color: #c5c5c5; color: #000000; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
 
@@ -42,7 +42,28 @@
             font-weight: 500;
             color: #000000;
         }
+        .issue-status{
+            background-color: #c5c5c5;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            /* This is the key for the smooth fade-out */
+            transition: opacity 0.5s ease-out;
+        }
 
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        /* This class will be added by JavaScript to make the element invisible */
+        .alert.fade-out {
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +73,11 @@
     <div class="issue-header">
         <h1 th:text="${issue.title}">Issue Title</h1>
 
+
+
+
         <div th:if="${userRole == 'ROLE_ADMIN' or userRole == 'FACILITY_USER'}">
+            <div th:if="${error}" id="error-message" class="alert alert-danger" th:text="${error}"></div>
             <form id="status-update-form" th:action="@{/issue/{id}/status(id=${issueId})}" method="post">
                 <label for="status-dropdown"><select name="status" id="status-dropdown" th:attr="data-original-status=${issue.status}">
                     <option th:each="s : ${allStatuses}"
@@ -63,7 +88,7 @@
                 </select></label>
             </form>
         </div>
-        <div th:if="${userRole == 'ROLE_USER'}">
+        <div th:if="${userRole == 'USER'}">
             <span class="issue-status" th:text="${issue.status.name()}">OPEN</span>
         </div>
     </div>
@@ -110,6 +135,28 @@
             }
         });
     }
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // Find the error message element by its ID
+        const errorMessage = document.getElementById('error-message');
+
+        // Check if the element exists on the page
+        if (errorMessage) {
+        // Set a timer for 5 seconds (5000 milliseconds)
+        setTimeout(function() {
+        // Add the 'fade-out' class to trigger the CSS transition
+        errorMessage.classList.add('fade-out');
+
+        // After the fade-out animation completes (500ms),
+        // set display to 'none' to remove it from the page layout
+        setTimeout(function() {
+        errorMessage.style.display = 'none';
+    }, 500); // This delay should match your CSS transition time
+
+    }, 5000); // 5-second delay
+    }
+    });
+
 </script>
 
 </body>
